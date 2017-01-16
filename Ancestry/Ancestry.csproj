@@ -206,6 +206,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AverageAge.cshtml" />
     <Content Include="Views\Home\AverageScales.cshtml" />
+    <Content Include="Views\Home\GenderDist.cshtml" />
+    <Content Include="Views\Home\ThankYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,11 +4,12 @@
     ViewBag.Title = "Review List";
 }
 
-<h2>User Details</h2>
+<h2>Review List</h2>
+<hr />
 
 @foreach (var item in Model)
 {
-    <table>
+    <table class="col-md-offset-3">
         <tr>
             <td>
                 Name :
@@ -33,5 +34,71 @@
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
         </tr>
+        <tr>
+            <td>
+                Gender :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Ability to find products :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AbilityToFind)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Range of products :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RangeOfProducts)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Easy checkout :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EasyCheckout)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Overall experience :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverallExperience)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Liked the most :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MostLiked)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Disliked the most :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MostDisliked)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Most like to see :
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MostLikeToSee)
+            </td>
+        </tr>
     </table>
+    <br />
+    <br />
 }

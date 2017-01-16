@@ -42,6 +42,11 @@ namespace Ancestry.Models
                 paramAge.Value = review.Age;
                 cmd.Parameters.Add(paramAge);
 
+                SqlParameter paramGender = new SqlParameter();
+                paramGender.ParameterName = "@Gender";
+                paramGender.Value = review.Gender;
+                cmd.Parameters.Add(paramGender);
+
                 SqlParameter paramAbilityToFind = new SqlParameter();
                 paramAbilityToFind.ParameterName = "@AbilityToFind";
                 paramAbilityToFind.Value = review.AbilityToFind;

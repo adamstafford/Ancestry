@@ -21,7 +21,8 @@ namespace Ancestry.Controllers
             Review review = new Review();
             review.Name = formCollection["Name"];
             review.Email = formCollection["Email"];
-            review.Age = Int32.Parse(formCollection["Age"]);
+            review.Age = Int32.Parse(formCollection["Age"]); //need try catch
+            review.Gender = formCollection["Gender"];
             review.AbilityToFind = Int32.Parse(formCollection["AbilityToFind"]);
             review.RangeOfProducts = Int32.Parse(formCollection["RangeOfProducts"]);
             review.EasyCheckout = Int32.Parse(formCollection["EasyCheckout"]);
@@ -33,7 +34,7 @@ namespace Ancestry.Controllers
             ReviewContext reviewContext = new ReviewContext();
             reviewContext.AddReview(review);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("ThankYou");
         }
 
         public ActionResult List()
@@ -48,14 +49,14 @@ namespace Ancestry.Controllers
             ReviewContext reviewContext = new ReviewContext();
 
             List<Review> list = reviewContext.review.ToList();
-            int TotalAge = 0;
+            int? totalAge = 0;
 
             foreach(Review r in list)
             {
-                TotalAge += r.Age;
+                totalAge += r.Age;
             }
 
-            ViewBag.AverageAge = TotalAge / list.Count;
+            ViewBag.AverageAge = totalAge / list.Count;
 
             return View();
         }
@@ -65,22 +66,48 @@ namespace Ancestry.Controllers
             ReviewContext reviewContext = new ReviewContext();
 
             List<Review> list = reviewContext.review.ToList();
-            int TotalScales = 0;
+            int totalScales = 0;
 
             foreach (Review r in list)
             {
-                TotalScales += r.AbilityToFind;
-                TotalScales += r.RangeOfProducts;
-                TotalScales += r.EasyCheckout;
-                TotalScales += r.OverallExperience;
+                totalScales += r.AbilityToFind;
+                totalScales += r.RangeOfProducts;
+                totalScales += r.EasyCheckout;
+                totalScales += r.OverallExperience;
             }
 
-            ViewBag.AverageScales = TotalScales / (list.Count * 4);
+            ViewBag.AverageScales = totalScales / (list.Count * 4);
 
             return View();
         }
 
         public ActionResult GenderDist()
+        {
+            ReviewContext reviewContext = new ReviewContext();
+
+            List<Review> list = reviewContext.review.ToList();
+            float totalMales = 0;
+            float totalFemales = 0;
+
+            foreach (Review r in list)
+            {
+                if (r.Gender == "Male")
+                {
+                    totalMales++;
+                }
+                if(r.Gender == "Female")
+                {
+                    totalFemales++;
+                }
+            }
+
+            ViewBag.Males = (totalMales / list.Count) * 100;
+            ViewBag.Females = (totalFemales / list.Count) * 100;
+            
+            return View();
+        }
+
+        public ActionResult ThankYou()
         {
             return View();
         }
