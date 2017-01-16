@@ -6,7 +6,7 @@
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
-    padding-right: 15px;
+    padding-right: 25px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -21,4 +21,10 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.thanks{
+    display: none;
+    font-size: 30px;
+    text-align: center;
 }

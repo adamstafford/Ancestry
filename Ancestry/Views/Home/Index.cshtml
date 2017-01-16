@@ -1,8 +1,11 @@
 ﻿@model Ancestry.Models.Review
 
+<link href="Site.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
 <h2>Survey</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { role = "form", enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
 
@@ -133,11 +136,33 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnSubmit" type="submit" value="Create" class="btn btn-block btn-primary" />
+                <input id="submitBtn" type="submit" value="Create" class="btn btn-block btn-primary" />
             </div>
         </div>
     </div>
 }
+
+<div class="thanks">
+    Thank You For Submitting A Survey
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script>
+    $('form').submit(function (ev) {
+        ev.preventDefault();
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (result) {
+                $('form').fadeOut(1000, function () {
+                    $('.thanks').fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
 
 
 @section Scripts {
