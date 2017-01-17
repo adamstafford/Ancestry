@@ -1,7 +1,6 @@
 ﻿@model Ancestry.Models.Review
 
-<link href="Site.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="~/Content/jquery.range.css">
 
 <h2>Survey</h2>
 
@@ -50,15 +49,8 @@
 
         <div class="form-group">
             <p class="control-label col-md-2" style="font-weight:bold">Ability To Find Products</p>
-            <div class="col-md-10">
-                @Html.DropDownList("AbilityToFind", new List<SelectListItem>
-                {
-                   new SelectListItem{ Text="1", Value="1"},
-                   new SelectListItem{ Text="2", Value="2"},
-                   new SelectListItem{ Text="3", Value="3"},
-                   new SelectListItem{ Text="4", Value="4"},
-                   new SelectListItem{ Text="5", Value="5"}
-                }, htmlAttributes: new { @class = "form-control" })
+            <div class="col-md-10" style="margin-top: 3.5%;">
+                <input type="hidden" name="AbilityToFind" class="single-slider theme-blue" value="23" />
                 @Html.ValidationMessageFor(model => model.AbilityToFind, "", new { @class = "text-danger" })
             </div>
             <div id="slider"></div>
@@ -67,46 +59,25 @@
 
         <div class="form-group">
             <p class="control-label col-md-2" style="font-weight:bold">Range Of Products</p>
-            <div class="col-md-10">
-                @Html.DropDownList("RangeOfProducts", new List<SelectListItem>
-                {
-                   new SelectListItem{ Text="1", Value="1"},
-                   new SelectListItem{ Text="2", Value="2"},
-                   new SelectListItem{ Text="3", Value="3"},
-                   new SelectListItem{ Text="4", Value="4"},
-                   new SelectListItem{ Text="5", Value="5"}
-                }, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AbilityToFind, "", new { @class = "text-danger" })
+            <div class="col-md-10" style="margin-top: 3%;">
+                <input type="hidden" name="RangeOfProducts" class="single-slider theme-blue" value="23" />
+                @Html.ValidationMessageFor(model => model.RangeOfProducts, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <p class="control-label col-md-2" style="font-weight:bold">Easy to checkout</p>
-            <div class="col-md-10">
-                @Html.DropDownList("EasyCheckout", new List<SelectListItem>
-                {
-                   new SelectListItem{ Text="1", Value="1"},
-                   new SelectListItem{ Text="2", Value="2"},
-                   new SelectListItem{ Text="3", Value="3"},
-                   new SelectListItem{ Text="4", Value="4"},
-                   new SelectListItem{ Text="5", Value="5"}
-                }, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AbilityToFind, "", new { @class = "text-danger" })
+            <div class="col-md-10" style="margin-top: 3%;">
+                <input type="hidden" name="EasyCheckout" class="single-slider theme-blue" value="23" />
+                @Html.ValidationMessageFor(model => model.EasyCheckout, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <p class="control-label col-md-2" style="font-weight:bold">Overall Experience</p>
-            <div class="col-md-10">
-                @Html.DropDownList("OverallExperience", new List<SelectListItem>
-                {
-                   new SelectListItem{ Text="1", Value="1"},
-                   new SelectListItem{ Text="2", Value="2"},
-                   new SelectListItem{ Text="3", Value="3"},
-                   new SelectListItem{ Text="4", Value="4"},
-                   new SelectListItem{ Text="5", Value="5"}
-                }, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AbilityToFind, "", new { @class = "text-danger" })
+            <div class="col-md-10" style="margin-top: 3%; margin-bottom: 1%">
+                <input type="hidden" name="OverallExperience" class="single-slider theme-blue" value="23" />
+                @Html.ValidationMessageFor(model => model.OverallExperience, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -147,6 +118,7 @@
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.range.js"></script>
 
 <script>
     $('form').submit(function (ev) {
@@ -164,6 +136,18 @@
     });
 </script>
 
+<script>
+    $('.single-slider').jRange({
+        from: 0,
+        to: 5,
+        step: 1,
+        scale: [0, 1, 2, 3, 4, 5],
+        format: '%s',
+        width: 300,
+        showLabels: true,
+        snap: true
+    });
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
