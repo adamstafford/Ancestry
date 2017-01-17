@@ -6,8 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Configuration;
-using NHibernate;
-using Ancestry.Helpers;
 
 namespace Ancestry.Models
 {
@@ -86,16 +84,6 @@ namespace Ancestry.Models
 
                 con.Open();
                 cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void Add(Review review)
-        {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                session.Save(review);
-                transaction.Commit();
             }
         }
     }

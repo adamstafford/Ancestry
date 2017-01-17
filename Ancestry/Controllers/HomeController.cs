@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Ancestry.Models;
 using Ancestry.Helpers;
 using NHibernate;
+using System.Diagnostics;
 
 namespace Ancestry.Controllers
 {
@@ -32,6 +33,10 @@ namespace Ancestry.Controllers
             review.MostLiked = formCollection["MostLiked"];
             review.MostDisliked = formCollection["MostDisliked"];
             review.MostLikeToSee = formCollection["MostLikeToSee"];
+            review.TimeDate = DateTime.Now;
+            review.IpAddress = GetIPAddress();
+            review.Browser = GetBrowser();
+            review.Device = GetDevice();
 
             using (ISession session = NHibernateHelper.OpenSession())
             {
@@ -118,6 +123,43 @@ namespace Ancestry.Controllers
         public ActionResult ThankYou()
         {
             return View();
+        }
+
+        protected string GetIPAddress()
+        {
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
+            string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (!string.IsNullOrEmpty(ipAddress))
+            {
+                string[] addresses = ipAddress.Split(',');
+                if (addresses.Length != 0)
+                {
+                    return addresses[0];
+                }
+            }
+
+            return context.Request.ServerVariables["REMOTE_ADDR"];
+        }
+
+        protected string GetBrowser()
+        {
+            System.Web.HttpBrowserCapabilitiesBase browser = Request.Browser;
+            return (browser.Browser);
+        }
+
+        protected string GetDevice()
+        {
+            System.Web.HttpBrowserCapabilitiesBase browser = Request.Browser;
+
+            if (browser.IsMobileDevice)
+            {
+                return browser.ScreenPixelsWidth < 720 ? "Mob" : "Tablet";
+            }
+            else
+            {
+                return "Desktop";
+            }
         }
     }
 }

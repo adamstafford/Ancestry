@@ -28,10 +28,9 @@ namespace Ancestry.Models
         public virtual string MostLiked { get; set; }
         public virtual string MostDisliked { get; set; }
         public virtual string MostLikeToSee { get; set; }
-        public virtual string TimeDate { get; set; }
+        public virtual DateTime TimeDate { get; set; }
         public virtual string IpAddress { get; set; }
         public virtual string Browser { get; set; }
         public virtual string Device { get; set; }
-
     }
 }

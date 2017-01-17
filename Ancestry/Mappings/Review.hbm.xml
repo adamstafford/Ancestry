@@ -18,6 +18,10 @@
   <property name="MostLiked" column="MostLiked" lazy="false"/>
   <property name="MostDisliked" column="MostDisliked" lazy="false"/>
   <property name="MostLikeToSee"  column="MostLikeToSee" lazy="false"/>
+  <property name="TimeDate" column="TimeDate" lazy="false"/>
+  <property name="IpAddress" column="IpAddress" lazy="false"/>
+  <property name="Browser" column="Browser" lazy="false"/>
+  <property name="Device"  column="Device" lazy="false"/>
 </class>
 
 </hibernate-mapping>
