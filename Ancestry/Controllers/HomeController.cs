@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Ancestry.Models;
+using Ancestry.Helpers;
+using NHibernate;
 
 namespace Ancestry.Controllers
 {
@@ -31,24 +33,30 @@ namespace Ancestry.Controllers
             review.MostDisliked = formCollection["MostDisliked"];
             review.MostLikeToSee = formCollection["MostLikeToSee"];
 
-            ReviewContext reviewContext = new ReviewContext();
-            reviewContext.AddReview(review);
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using(ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Save(review);
+                    transaction.Commit();
+                }
+            }
 
             return RedirectToAction("ThankYou");
         }
 
         public ActionResult List()
         {
-            ReviewContext reviewContext = new ReviewContext();
+            using (ISession session = NHibernateHelper.OpenSession())
+                return View(session.CreateCriteria<Review>().List<Review>());
 
-            return View(reviewContext.review.ToList());
         }
 
         public ActionResult AverageAge()
         {
-            ReviewContext reviewContext = new ReviewContext();
+            ISession session = NHibernateHelper.OpenSession();
 
-            List<Review> list = reviewContext.review.ToList();
+            List<Review> list = session.CreateCriteria<Review>().List<Review>().ToList();
             int? totalAge = 0;
 
             foreach(Review r in list)
@@ -63,9 +71,9 @@ namespace Ancestry.Controllers
 
         public ActionResult AverageScales()
         {
-            ReviewContext reviewContext = new ReviewContext();
+            ISession session = NHibernateHelper.OpenSession();
 
-            List<Review> list = reviewContext.review.ToList();
+            List<Review> list = session.CreateCriteria<Review>().List<Review>().ToList();
             int totalScales = 0;
 
             foreach (Review r in list)
@@ -83,9 +91,9 @@ namespace Ancestry.Controllers
 
         public ActionResult GenderDist()
         {
-            ReviewContext reviewContext = new ReviewContext();
+            ISession session = NHibernateHelper.OpenSession();
 
-            List<Review> list = reviewContext.review.ToList();
+            List<Review> list = session.CreateCriteria<Review>().List<Review>().ToList();
             float totalMales = 0;
             float totalFemales = 0;
 

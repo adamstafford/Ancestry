@@ -108,3 +108,8 @@ C:\Git\Ancestry\Ancestry\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Git\Ancestry\Ancestry\obj\Debug\Ancestry.csprojResolveAssemblyReference.cache
 C:\Git\Ancestry\Ancestry\obj\Debug\Ancestry.dll
 C:\Git\Ancestry\Ancestry\obj\Debug\Ancestry.pdb
+C:\Git\Ancestry\Ancestry\bin\Iesi.Collections.dll
+C:\Git\Ancestry\Ancestry\bin\NHibernate.dll
+C:\Git\Ancestry\Ancestry\bin\Iesi.Collections.xml
+C:\Git\Ancestry\Ancestry\bin\NHibernate.xml
+C:\Git\Ancestry\Ancestry\bin\hibernate.cfg.xml

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Ancestry"
+                   namespace="Ancestry.Models">
+
+<class name="Review">
+  <id name="Review_Id" column="Review_Id" unsaved-value="0">
+    <generator class="native" />
+  </id>
+  <property name="Name" column="Name" lazy="false" />
+  <property name="Email" column="Email" lazy="false"/>
+  <property name="Gender" column="Gender" lazy="false"/>
+  <property name="Age" column="Age" lazy="false"/>
+  <property name="AbilityToFind" column="AbilityToFind" lazy="false"/>
+  <property name="RangeOfProducts" column="RangeOfProducts" lazy="false"/>
+  <property name="EasyCheckout" column="EasyCheckout" lazy="false"/>
+  <property name="OverallExperience" column="OverallExperience" lazy="false"/>
+  <property name="MostLiked" column="MostLiked" lazy="false"/>
+  <property name="MostDisliked" column="MostDisliked" lazy="false"/>
+  <property name="MostLikeToSee"  column="MostLikeToSee" lazy="false"/>
+</class>
+
+</hibernate-mapping>

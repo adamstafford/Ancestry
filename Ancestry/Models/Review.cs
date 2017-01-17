@@ -9,24 +9,29 @@ namespace Ancestry.Models
     public class Review
     {
         [Key]
-        public int Review_Id { get; set; }
+        public virtual int Review_Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Email { get; set; }
-        public string Gender { get; set; }
-        public int? Age { get; set; }
+        public virtual string Email { get; set; }
+        public virtual string Gender { get; set; }
+        public virtual int? Age { get; set; }
         [Range(0, 5)]
-        public int AbilityToFind { get; set; }
+        public virtual int AbilityToFind { get; set; }
         [Range(0, 5)]
-        public int RangeOfProducts { get; set; }
+        public virtual int RangeOfProducts { get; set; }
         [Range(0, 5)]
-        public int EasyCheckout { get; set; }
+        public virtual int EasyCheckout { get; set; }
         [Range(0, 5)]
-        public int OverallExperience { get; set; }
-        public string MostLiked { get; set; }
-        public string MostDisliked { get; set; }
-        public string MostLikeToSee { get; set; }
+        public virtual int OverallExperience { get; set; }
+        public virtual string MostLiked { get; set; }
+        public virtual string MostDisliked { get; set; }
+        public virtual string MostLikeToSee { get; set; }
+        public virtual string TimeDate { get; set; }
+        public virtual string IpAddress { get; set; }
+        public virtual string Browser { get; set; }
+        public virtual string Device { get; set; }
+
     }
 }
