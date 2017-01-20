@@ -11,6 +11,7 @@ namespace Ancestry.Models
 {
     public class ReviewContext : DbContext
     {
+        //Uses Entity Framework
         public DbSet<Review> review { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

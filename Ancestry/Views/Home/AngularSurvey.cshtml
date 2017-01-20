@@ -1,0 +1,144 @@
+﻿@model Ancestry.Models.Review
+@*Index.cshtml*@
+<link rel="stylesheet" href="~/Content/jquery.range.css">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/scripts/angular.js"></script>
+    <title>Index</title>
+</head>
+<body ng-app="myApp">
+    <h2>Take Our Survey</h2>
+    <hr />
+    <div ng-controller="formCtrl">
+        <form novalidate>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" ng-model="review.Name" class="form-control" required>
+                    <validated-input name="Name" display="Name" ng-model="review.Name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="email" ng-model="review.Email" class="form-control">
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", @id = "error-email" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="number" ng-model="review.Age" class="form-control">
+                    @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <select ng-model="review.Gender" class="form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AbilityToFind, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="margin-top: 3.5%;">
+                    <input type="hidden" ng-model="review.AbilityToFind" name="AbilityToFind" class="single-slider theme-blue" value="23" />
+                    @Html.ValidationMessageFor(model => model.AbilityToFind, "", new { @class = "text-danger" })
+                </div>
+                <div id="slider"></div>
+                <asp:label id="lbl"></asp:label>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RangeOfProducts, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="margin-top: 3%;">
+                    <input type="hidden" ng-model="review.RangeOfProducts" name="RangeOfProducts" class="single-slider theme-blue" value="23" />
+                    @Html.ValidationMessageFor(model => model.RangeOfProducts, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EasyCheckout, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="margin-top: 3%;">
+                    <input type="hidden" ng-model="review.EasyCheckout" name="EasyCheckout" class="single-slider theme-blue" value="23" />
+                    @Html.ValidationMessageFor(model => model.EasyCheckout, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OverallExperience, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="margin-top: 3%; margin-bottom: 1%">
+                    <input type="hidden" ng-model="review.OverallExperience" name="OverallExperience" class="single-slider theme-blue" value="23" />
+                    @Html.ValidationMessageFor(model => model.OverallExperience, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MostLiked, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" ng-model="review.MostLiked" class="form-control">
+                    @Html.ValidationMessageFor(model => model.MostLiked, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MostDisliked, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" ng-model="review.MostDisliked" class="form-control">
+                    @Html.ValidationMessageFor(model => model.MostDisliked, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MostLikeToSee, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" ng-model="review.MostLikeToSee" class="form-control">
+                    @Html.ValidationMessageFor(model => model.MostLikeToSee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input ng-click="submit()" value="Submit" class="btn btn-block btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+    </body>
+</html>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.range.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('formCtrl',['$scope', '$http', function ($scope, $http) {
+        $scope.review = {};
+
+        $scope.submit = function () {
+            console.log("HERE " + $scope.review.Name);
+            $http({
+                url: '/api/review',
+                method: 'Post',
+                data: $scope.review
+            });
+        };
+    }]);
+</script>
+<script>
+    $('.single-slider').jRange({
+        from: 0,
+        to: 5,
+        step: 1,
+        scale: [0, 1, 2, 3, 4, 5],
+        format: '%s',
+        width: 300,
+        showLabels: true,
+        snap: true
+    });
+</script>

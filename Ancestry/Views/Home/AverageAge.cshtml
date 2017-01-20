@@ -3,5 +3,25 @@
     ViewBag.Title = "AverageAge";
 }
 
-<h2>Average Age: @ViewBag.AverageAge</h2>
+<h2 style="text-align: center; margin-top: 20%">Average Age</h2>
+
+<div id="shiva"><span class="count">@ViewBag.AverageAge</span></div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $('.count').each(function () {
+        $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+        }, {
+            duration: 4000,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            },
+            complete: function () {
+                $('.count').animate({ fontSize: '200px'});
+            }
+        });
+    });
+</script>
 

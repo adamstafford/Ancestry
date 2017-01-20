@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 namespace Ancestry.Controllers
 {
+    [Internationalization]
     public class HomeController : Controller
     {
         [HttpGet]
@@ -18,43 +19,10 @@ namespace Ancestry.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(FormCollection formCollection)
-        {
-            Review review = new Review();
-            review.Name = formCollection["Name"];
-            review.Email = formCollection["Email"];
-            review.Age = Int32.Parse(formCollection["Age"]); //need try catch
-            review.Gender = formCollection["Gender"];
-            review.AbilityToFind = Int32.Parse(formCollection["AbilityToFind"]);
-            review.RangeOfProducts = Int32.Parse(formCollection["RangeOfProducts"]);
-            review.EasyCheckout = Int32.Parse(formCollection["EasyCheckout"]);
-            review.OverallExperience = Int32.Parse(formCollection["OverallExperience"]);
-            review.MostLiked = formCollection["MostLiked"];
-            review.MostDisliked = formCollection["MostDisliked"];
-            review.MostLikeToSee = formCollection["MostLikeToSee"];
-            review.TimeDate = DateTime.Now;
-            review.IpAddress = GetIPAddress();
-            review.Browser = GetBrowser();
-            review.Device = GetDevice();
-
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                using(ITransaction transaction = session.BeginTransaction())
-                {
-                    session.Save(review);
-                    transaction.Commit();
-                }
-            }
-
-            return RedirectToAction("ThankYou");
-        }
-
         public ActionResult List()
         {
             using (ISession session = NHibernateHelper.OpenSession())
-                return View(session.CreateCriteria<Review>().List<Review>());
-
+                return View(session.CreateCriteria<Review>().List<Review>().OrderBy(r => r.Name));
         }
 
         public ActionResult AverageAge()
@@ -66,11 +34,13 @@ namespace Ancestry.Controllers
 
             foreach(Review r in list)
             {
-                totalAge += r.Age;
+                if(r.Age != null)
+                {
+                    totalAge += r.Age;
+                }
             }
 
             ViewBag.AverageAge = totalAge / list.Count;
-
             return View();
         }
 
@@ -79,18 +49,24 @@ namespace Ancestry.Controllers
             ISession session = NHibernateHelper.OpenSession();
 
             List<Review> list = session.CreateCriteria<Review>().List<Review>().ToList();
-            int totalScales = 0;
+            int Find = 0;
+            int Products = 0;
+            int Checkout = 0;
+            int Experience = 0;
 
+            //Average per person?
             foreach (Review r in list)
             {
-                totalScales += r.AbilityToFind;
-                totalScales += r.RangeOfProducts;
-                totalScales += r.EasyCheckout;
-                totalScales += r.OverallExperience;
+                Find += r.AbilityToFind;
+                Products += r.RangeOfProducts;
+                Checkout += r.EasyCheckout;
+                Experience += r.OverallExperience;
             }
 
-            ViewBag.AverageScales = totalScales / (list.Count * 4);
-
+            ViewBag.Find = Find / list.Count;
+            ViewBag.Products = Products / list.Count;
+            ViewBag.Checkout = Checkout / list.Count;
+            ViewBag.Experience = Experience / list.Count;
             return View();
         }
 
@@ -108,7 +84,7 @@ namespace Ancestry.Controllers
                 {
                     totalMales++;
                 }
-                if(r.Gender == "Female")
+                else if(r.Gender == "Female")
                 {
                     totalFemales++;
                 }
@@ -116,50 +92,49 @@ namespace Ancestry.Controllers
 
             ViewBag.Males = (totalMales / list.Count) * 100;
             ViewBag.Females = (totalFemales / list.Count) * 100;
-            
             return View();
         }
 
         public ActionResult ThankYou()
         {
+
             return View();
         }
 
-        protected string GetIPAddress()
+        public ActionResult Device()
         {
-            System.Web.HttpContext context = System.Web.HttpContext.Current;
-            string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            ISession session = NHibernateHelper.OpenSession();
 
-            if (!string.IsNullOrEmpty(ipAddress))
+            List<Review> list = session.CreateCriteria<Review>().List<Review>().ToList();
+            float Mobile = 0;
+            float Tablet = 0;
+            float Desktop = 0;
+
+            foreach (Review r in list)
             {
-                string[] addresses = ipAddress.Split(',');
-                if (addresses.Length != 0)
+                if (r.Device == "Mobile")
                 {
-                    return addresses[0];
+                    Mobile++;
+                }
+                else if (r.Device == "Tablet")
+                {
+                    Tablet++;
+                }
+                else if (r.Device == "Desktop")
+                {
+                    Desktop++;
                 }
             }
 
-            return context.Request.ServerVariables["REMOTE_ADDR"];
+            ViewBag.Mobile = (Mobile / list.Count) * 100;
+            ViewBag.Tablet = (Tablet / list.Count) * 100;
+            ViewBag.Desktop = (Desktop / list.Count) * 100;
+            return View();
         }
 
-        protected string GetBrowser()
+        public ActionResult AngularSurvey()
         {
-            System.Web.HttpBrowserCapabilitiesBase browser = Request.Browser;
-            return (browser.Browser);
-        }
-
-        protected string GetDevice()
-        {
-            System.Web.HttpBrowserCapabilitiesBase browser = Request.Browser;
-
-            if (browser.IsMobileDevice)
-            {
-                return browser.ScreenPixelsWidth < 720 ? "Mob" : "Tablet";
-            }
-            else
-            {
-                return "Desktop";
-            }
+            return View();
         }
     }
 }

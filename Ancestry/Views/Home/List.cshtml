@@ -5,100 +5,67 @@
 }
 
 <h2>Review List</h2>
-<hr />
+<br/>
 
-@foreach (var item in Model)
-{
-    <table class="col-md-offset-3">
+<table class="list-table">
+    <tr class="row-list">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Ability To Find</th>
+        <th>Range Of Products</th>
+        <th>Easy Checkout</th>
+        <th>Overall Experience</th>
+        <th>Most Liked</th>
+        <th>Most Disliked</th>
+        <th>Most Like To See</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <td>
-                Name :
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Email :
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-        </tr>
-        <tr>
             <td>
-                Age :
+                @Html.DisplayFor(modelItem => item.Gender)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
-        </tr>
-        <tr>
-            <td>
-                Gender :
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Ability to find products :
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AbilityToFind)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Range of products :
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RangeOfProducts)
             </td>
-        </tr>
-        <tr>
-            <td>
-                Easy checkout :
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EasyCheckout)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Overall experience :
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OverallExperience)
             </td>
-        </tr>
-        <tr>
-            <td>
-                Liked the most :
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MostLiked)
             </td>
-        </tr>
-        <tr>
-            <td>
-                Disliked the most :
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MostDisliked)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Most like to see :
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MostLikeToSee)
             </td>
         </tr>
-    </table>
-    <br />
-    <br />
-}
+    }
+</table>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('.list-table').fadeIn(1000);
+    });
+</script>

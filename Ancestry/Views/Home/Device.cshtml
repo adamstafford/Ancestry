@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Device";
+}
+
+<html>
+<head>
+    <title>Devices</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Mobile');
+        data.addColumn('number', 'Tablet');
+        data.addRows([
+          ['Mobile', @ViewBag.Mobile],
+          ['Tablet', @ViewBag.Tablet],
+          ['Desktop', @ViewBag.Desktop]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Device Usage',
+                       'width':1300,
+                       'height': 600,
+                        'margin-left': 100};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+    </script>
+</head>
+
+<body>
+    <div id="chart_div"></div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('#chart_div').fadeIn(3000);
+    });
+</script>
+
