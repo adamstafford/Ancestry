@@ -5,19 +5,22 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <script src="~/scripts/angular.js"></script>
+    <script src="~/Scripts/angular-messages.js"></script>
     <title>Index</title>
 </head>
 <body ng-app="myApp">
     <h2>Take Our Survey</h2>
     <hr />
     <div ng-controller="formCtrl">
-        <form novalidate>
+        <form name="reviewForm" required>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" ng-model="review.Name" class="form-control" required>
-                    <validated-input name="Name" display="Name" ng-model="review.Name" required>
+                    <input type="text" name="Name" ng-model="review.Name" class="form-control" required>
+                    <div class="field-message">
+                        Name is required
+                    </div>
                 </div>
             </div>
 
@@ -25,7 +28,9 @@
                 @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <input type="email" ng-model="review.Email" class="form-control">
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", @id = "error-email" })
+                    <div class="field-message" ng-messages="reviewForm.Email.$error" ng-if='reviewForm.Email.$dirty' ng-cloak>
+                        <div ng-message="required">Email is required</div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -116,11 +121,12 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.range.js"></script>
 <script>
-    var app = angular.module('myApp', []);
+    var app = angular.module('myApp', ['ngMessages']);
     app.controller('formCtrl',['$scope', '$http', function ($scope, $http) {
         $scope.review = {};
 
         $scope.submit = function () {
+            if()
             console.log("HERE " + $scope.review.Name);
             $http({
                 url: '/api/review',

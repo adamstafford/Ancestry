@@ -64,3 +64,17 @@ a{
 #chart_div{
     display: none;
 }
+.pure-form input.ng-dirty.ng-invalid {
+  border-color: #e9322d;
+}
+
+.field-message {
+  display: none;
+  color:#e9322d;
+  font-size: 90%;
+  margin-left: 0.5em;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
