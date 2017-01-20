@@ -122,11 +122,14 @@
 <script src="~/Scripts/jquery.range.js"></script>
 <script>
     var app = angular.module('myApp', ['ngMessages']);
-    app.controller('formCtrl',['$scope', '$http', function ($scope, $http) {
+    app.controller('formCtrl',['$scope', '$http', '$element', function ($scope, $http) {
         $scope.review = {};
 
         $scope.submit = function () {
-            if()
+            if ($scope.review.Name == null || $scope.review.Name == "")
+            {
+                
+            }
             console.log("HERE " + $scope.review.Name);
             $http({
                 url: '/api/review',
